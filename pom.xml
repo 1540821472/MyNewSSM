@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- lookup parent from repository -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.2.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>com</groupId>
@@ -31,16 +32,40 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!--配置热生效，添加依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--添加lombok依赖 使用@Data-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+        </dependency>
     </dependencies>
 
-    <!--这个是用来打包的,找到main函数并打成jar包，如果没有加这个build，则执行jar包 ，报错如下（找不到main函数）
-        java -jar spring-boot-demo-0.0.1-SNAPSHOT.jar
-        no main manifest attribute, in spring-boot-demo-0.0.1-SNAPSHOT.jar-->
+
     <build>
         <plugins>
+            <!--添加插件，这个是用来打包的,找到main函数并打成jar包，如果没有加这个build，则执行jar包 ，报错如下（找不到main函数）
+            java -jar spring-boot-demo-0.0.1-SNAPSHOT.jar
+            no main manifest attribute, in spring-boot-demo-0.0.1-SNAPSHOT.jar-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!--添加热生效插件-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork><!--必须添加这个配置-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
